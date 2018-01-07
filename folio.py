@@ -54,6 +54,13 @@ def finddic(diclist, key, val):
 
 # Entry point-------------------------------------------
 
+#test finddic
+print finddic([
+    {"name":"koteitan","age":10},
+    {"name":"test","age":20}
+  ],"age",20);
+exit();
+
 binance = Binance(mysetting.BINANCE_KEY, mysetting.BINANCE_SECRET)
 bitbank = Bitbank()
 
