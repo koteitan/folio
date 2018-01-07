@@ -10,6 +10,14 @@ private cryotofolio manager
 
 ## requirements
 * python
+* Binance account and its API key and API secrets
+```python:mysetting.py
+BINANCE_HIST  ="binance.csv"
+BINANCE_KEY   ="(KEY)"
+BINANCE_SECRET="(SECRET)"
+BITBANK_KEY   ="(KEY)"
+BITBANK_SECRET="(SECRET)"
+```
 * binance.client lib to get latest prices
 * python_bitbankcc lib to get BTC/JPY
 
