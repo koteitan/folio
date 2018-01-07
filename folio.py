@@ -9,72 +9,70 @@ import csv
 from datetime import datetime as dt
 
 # functions -------------------------------
-def initBinance(key, secret)
-  """gets binance information.
-    bn=initBinance(key, secret)
+class Binance:
+  def __init__(self, key, secret):
+    """
+    gets binance information.
+    initBinance(key, secret)
     key    = API key    for binance
     secret = API secret for binance
-    bn.client = client Object
-    bn.exinfo = exchangeInfo
-    bn.limit  = limit of access
-    bn.symbollist = symbol list
-  """
-  bn.client=binance.client.Client(key,secret)
-  bn.exinfo=bn.client.get_exchange_info()
-  # get rateLimit
-  for e in bn.exinfo["rateLimits"]:
-    if e["rateLimitType"] == "REQUESTS":
-      bn.limit=e["limit"]
-  bn.symbollist=result["symbols"] 
-  return bn
+    self.client = client Object
+    self.exinfo = exchangeInfo
+    self.limit  = limit of access
+    self.symbollist = symbol list
+    """
+    self.client=binance.client.Client(key,secret)
+    self.exinfo=self.client.get_exchange_info()
+    # get rateLimit
+    for e in self.exinfo["rateLimits"]:
+      if e["rateLimitType"] == "REQUESTS":
+        self.limit=e["limit"]
+    self.symbollist=self.exinfo["symbols"] 
 
-def initBitbank
-  bb.pub = python_bitbankcc.public();
+class Bitbank:
+  def __init__(self):
+    self.pub = python_bitbankcc.public();
 
 def market2base(symbols, market):
   """returns (base, quoite) from symbol.
      symbols = binance symbols list in exchangeInfo"""
-  listedsymbol=finddic(symbols, "market")
+  listedsymbol=finddic(symbols, "market", market)
   if listedsymbol is not None:
     base =listedsymbol["baseasset"]
     quote=listedsymbol["quoteasset"]
     return (base, quote)
   else:
-    return None
+    return (None, None)
 
-def finddic(diclist, key0, val0):
+def finddic(diclist, key, val):
   """searches the dictionary which has {key0:val0} in the list."""
   for dic in diclist:
-    if key0 in dic:
-      if dic[key0]==val0:
+    if key in dic:
+      if dic[key]==val:
         return dic
   return None
 
 # Entry point-------------------------------------------
 
-bn = initBinance(mysetting.BINANCE_KEY, mysetting.BINANCE_SECRET)
-bb = initBitbank()
+binance = Binance(mysetting.BINANCE_KEY, mysetting.BINANCE_SECRET)
+bitbank = Bitbank()
 
 # analyse binance.csv
 with open(mysetting.BINANCE_HIST,'r') as f:
   reader = csv.DictReader(f)
   for row in reader:
-    actime = dt.strptime(row["Date"],"%Y/%m/%d %H:%M")
+    actime = dt.strptime(row["Date"],"%Y-%m-%d %H:%M:%S")
     market = row["Market"]
-    (base, quote) = market2base(symbols, market)
+    (base, quote) = market2base(binance.symbollist, market)
     if row["Type"]=="BUY":
       bought = base
       sold   = quote
     else:
       bought = quote
       sold   = base
-    print({"actime":actime,"market":market,"base":base,'quote':quote,'bought':bought,"sold":sold}
+    print({"actime":actime,"market":market,"base":base,'quote':quote,'bought':bought,"sold":sold});
 
-exit()
-
-
-
-# test bitbank -------
+exit();
 
 # test binance -------
 result=bnClient.get_klines(
