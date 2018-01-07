@@ -8,7 +8,8 @@ import json # for binance
 import csv
 from datetime import datetime as dt
 
-# functions -------------------------------
+# Objects and functions -------------------------------
+class Object: pass
 class Binance:
   def __init__(self, key, secret):
     """
@@ -36,16 +37,17 @@ class Bitbank:
 def market2base(symbols, market):
   """returns (base, quoite) from symbol.
      symbols = binance symbols list in exchangeInfo"""
-  listedsymbol=finddic(symbols, "market", market)
+  listedsymbol=finddic(symbols, "symbol", market)
   if listedsymbol is not None:
-    base =listedsymbol["baseasset"]
-    quote=listedsymbol["quoteasset"]
+    base =listedsymbol["baseAsset"]
+    quote=listedsymbol["quoteAsset"]
     return (base, quote)
   else:
     return (None, None)
 
 def finddic(diclist, key, val):
   """searches the dictionary which has {key0:val0} in the list."""
+  #import pdb; pdb.set_trace()
   for dic in diclist:
     if key in dic:
       if dic[key]==val:
@@ -54,16 +56,8 @@ def finddic(diclist, key, val):
 
 # Entry point-------------------------------------------
 
-#test finddic
-print finddic([
-    {"name":"koteitan","age":10},
-    {"name":"test","age":20}
-  ],"age",20);
-exit();
-
 binance = Binance(mysetting.BINANCE_KEY, mysetting.BINANCE_SECRET)
 bitbank = Bitbank()
-
 # analyse binance.csv
 with open(mysetting.BINANCE_HIST,'r') as f:
   reader = csv.DictReader(f)
