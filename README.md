@@ -33,10 +33,7 @@ sudo pip install git+https://github.com/bitbankinc/python-bitbankcc.git
 
 If they don't work please try:
 ```bash:
-sudo apt install python-pip
-sudo apt install python-pip --fix-missing
-```
-
-```bash:
+sudo apt-get install python-pip python-dev git
+sudo apt-get install python-pip --fix-missing
 sudo -H pip install git+https://github.com/bitbankinc/python-bitbankcc.git
 ```

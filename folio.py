@@ -24,11 +24,19 @@ class Binance:
     """
     self.client=binance.client.Client(key,secret)
     self.exinfo=self.client.get_exchange_info()
+    self.last = time.time()
+    self.margin = 2 # margin to access limit
     # get rateLimit
     for e in self.exinfo["rateLimits"]:
       if e["rateLimitType"] == "REQUESTS":
         self.limit=e["limit"]
     self.symbollist=self.exinfo["symbols"] 
+
+  def wait(weight):
+    return
+  def getprice(t, base, quote):
+    return
+    
 
 class Bitbank:
   def __init__(self):
@@ -55,9 +63,9 @@ def finddic(diclist, key, val):
   return None
 
 # Entry point-------------------------------------------
-
 binance = Binance(mysetting.BINANCE_KEY, mysetting.BINANCE_SECRET)
 bitbank = Bitbank()
+
 # analyse binance.csv
 with open(mysetting.BINANCE_HIST,'r') as f:
   reader = csv.DictReader(f)
